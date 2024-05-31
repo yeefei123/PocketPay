@@ -12,13 +12,13 @@ export default function TabLayout() {
     <Tabs
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
-        headerShown: false,
       }}>
       <Tabs.Screen
         name="index"
         options={{
-          title: 'PayPocket',
-          headerShown: true,
+          title: 'Home',
+          headerTitle: 'PayPocket', 
+          headerShown: true, 
           tabBarIcon: ({ color, focused }) => (
             <TabBarIcon name={focused ? 'home' : 'home-outline'} color={color} />
           ),
@@ -27,8 +27,9 @@ export default function TabLayout() {
       <Tabs.Screen
         name="explore"
         options={{
-          title: 'PayPocket',
-          headerShown: true,
+          title: 'Profile',
+          headerTitle: 'PayPocket', 
+          headerShown: true, 
           tabBarIcon: ({ color, focused }) => (
             <TabBarIcon name={focused ? 'person' : 'person-outline'} color={color} />
           ),
