@@ -1,45 +1,95 @@
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { useColorScheme } from '@/hooks/useColorScheme';
+import React from 'react';
+import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
-export default function TabTwoScreen() {
+export default function ProfileScreen() {
+  const colorScheme = useColorScheme();
+  const isDarkMode = colorScheme === 'dark';
+
   return (
-    <View style={styles.container}>
-      <View style={styles.header}>
-        <View style={styles.body}>
-          <View style={styles.bodyContent}>
-            <TouchableOpacity style={styles.buttonContainer}>
-              <Text style={styles.historyText}>Alex</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.buttonContainer}>
-              
-            </TouchableOpacity>
-          </View>
+    <ScrollView contentContainerStyle={styles.container}>
+      <View style={[styles.header, { backgroundColor: isDarkMode ? '#333' : '#f5f5f5' }]}>
+        <Image source={require('../../assets/images/image.png')} style={styles.profilePic} />
+        <Text style={[styles.name, { color: isDarkMode ? 'white' : 'black' }]}>Alex</Text>
+      </View>
+      <View style={styles.body}>
+        <View style={styles.bodyContent}>
+          <Text style={styles.info}>Account Number: 7773240</Text>
+          <Text style={styles.info}>Email: alex@example.com</Text>
+          <Text style={styles.info}>Phone: +60 12-345 6789</Text>
+        </View>
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity style={styles.button}>
+            <Text style={styles.buttonText}>Edit Profile</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.button}>
+            <Text style={styles.buttonText}>Settings</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.button}>
+            <Text style={styles.buttonText}>Transaction History</Text>
+          </TouchableOpacity>
         </View>
       </View>
-      </View>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
-  container:{
-    alignContent: 'center',
-    justifyContent: 'center'
+  container: {
+    flexGrow: 1,
+    alignItems: 'center',
+    backgroundColor: '#f0f0f0',
+    paddingBottom: 20,
   },
-  header:{
-
+  header: {
+    width: '100%',
+    alignItems: 'center',
+    paddingVertical: 20,
+    paddingHorizontal: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: '#ccc',
   },
-  body:{
-
+  profilePic: {
+    width: 100,
+    height: 100,
+    borderRadius: 50,
+    borderWidth: 2,
+    borderColor: '#1E90FF',
   },
-  historyText:{
-    color: 'white'
+  name: {
+    marginTop: 10,
+    fontSize: 24,
+    fontWeight: 'bold',
   },
-  bodyContent:{
-
+  body: {
+    flex: 1,
+    width: '100%',
+    alignItems: 'center',
+    marginTop: 30,
   },
-  info:{
-
+  bodyContent: {
+    width: '90%',
+    alignItems: 'center',
+    marginBottom: 20,
   },
-  buttonContainer:{
-
-  }
+  info: {
+    fontSize: 18,
+    marginTop: 10,
+    color: '#333',
+  },
+  buttonContainer: {
+    width: '90%',
+    marginTop: 20,
+  },
+  button: {
+    backgroundColor: '#1E90FF',
+    padding: 15,
+    borderRadius: 10,
+    marginTop: 10,
+    alignItems: 'center',
+  },
+  buttonText: {
+    color: 'white',
+    fontSize: 18,
+  },
 });
