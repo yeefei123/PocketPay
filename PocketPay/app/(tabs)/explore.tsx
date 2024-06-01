@@ -26,7 +26,10 @@ export default function ProfileScreen() {
             <Text style={styles.buttonText}>Settings</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.button}>
-            <Text style={styles.buttonText}>Transaction History</Text>
+            <Text style={styles.buttonText}>QnA</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.button}>
+            <Text style={styles.buttonText}>LogOut</Text>
           </TouchableOpacity>
         </View>
       </View>

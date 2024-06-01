@@ -1,9 +1,12 @@
 {
   "dependencies": {
+    "@react-navigation/stack": "^6.3.29",
     "expo": "^51.0.9",
     "expo-barcode-scanner": "~13.0.1",
+    "expo-sqlite": "~14.0.3",
     "nativewind": "^2.0.11",
     "react-native-camera": "^4.2.1",
+    "react-native-modal": "^13.0.1",
     "react-native-paper": "^5.12.3",
     "react-native-permissions": "^4.1.5"
   },

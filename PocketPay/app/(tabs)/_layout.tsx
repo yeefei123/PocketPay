@@ -17,8 +17,8 @@ export default function TabLayout() {
         name="index"
         options={{
           title: 'Home',
-          headerTitle: 'PayPocket', 
-          headerShown: true, 
+          headerTitle: 'PayPocket',
+          headerShown: true,
           tabBarIcon: ({ color, focused }) => (
             <TabBarIcon name={focused ? 'home' : 'home-outline'} color={color} />
           ),
@@ -28,10 +28,32 @@ export default function TabLayout() {
         name="explore"
         options={{
           title: 'Profile',
-          headerTitle: 'PayPocket', 
-          headerShown: true, 
+          headerTitle: 'PayPocket',
+          headerShown: true,
           tabBarIcon: ({ color, focused }) => (
             <TabBarIcon name={focused ? 'person' : 'person-outline'} color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="history"
+        options={{
+          title: 'History',
+          headerTitle: 'PayPocket',
+          headerShown: true,
+          tabBarIcon: ({ color, focused }) => (
+            <TabBarIcon name={focused ? 'time' : 'time-outline'} color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="scanner"
+        options={{
+          title: 'QR Scanner',
+          headerTitle: 'PayPocket',
+          headerShown: true,
+          tabBarIcon: ({ color, focused }) => (
+            <TabBarIcon name={focused ? 'qr-code' : 'qr-code-outline'} color={color} />
           ),
         }}
       />

@@ -1,6 +1,6 @@
 import { useColorScheme } from '@/hooks/useColorScheme';
-import React from 'react';
-import { FlatList, ImageBackground, ImageSourcePropType, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import React, { useState } from 'react';
+import { ImageBackground, ImageSourcePropType, Modal, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/Ionicons';
 
@@ -17,44 +17,30 @@ const Card = ({ title, image }: CardProps) => {
   );
 };
 
-const paymentHistory = [
-  { id: '1', description: 'Grocery Shopping', amount: '-RM150.00', date: '2024-05-20' },
-  { id: '2', description: 'Salary', amount: '+RM3000.00', date: '2024-05-18' },
-  { id: '3', description: 'Electricity Bill', amount: '-RM200.00', date: '2024-05-15' },
-  { id: '4', description: 'Dining Out', amount: '-RM75.00', date: '2024-05-14' },
-];
-
-interface PaymentHistoryItem {
-  id: string;
-  description: string;
-  amount: string;
-  date: string;
-}
-
-const renderHistoryItem = ({ item }: { item: PaymentHistoryItem }) => (
-  <View style={styles.historyItem}>
-    <Text style={styles.historyText}>{item.description}</Text>
-    <Text style={styles.historyText}>{item.amount}</Text>
-    <Text style={styles.historyDate}>{item.date}</Text>
-  </View>
-);
-
 export default function HomeScreen() {
   const colorScheme = useColorScheme();
   const isDarkMode = colorScheme === 'dark';
+  const [modalVisible, setModalVisible] = useState(false);
+  const [amount, setAmount] = useState('');
+
+  const handleSendPress = () => {
+    setModalVisible(true);
+  };
+
+  const handleAddPress = () => {
+    // Handle the add amount logic here
+    setModalVisible(false);
+  };
+
+  const handleCancelPress = () => {
+    setModalVisible(false);
+  };
 
   return (
     <SafeAreaView style={styles.safeArea}>
-      <TouchableOpacity onPress={() => console.log('QR Code button pressed')} style={styles.qrButton}>
-        <Icon name="qr-code-outline" size={30} color="black" />
-      </TouchableOpacity>
-
       <View style={styles.container}>
         <View style={styles.cardContainer}>
-          <Card
-            title='7773240'
-            image={require('../../assets/images/accountCard.jpg')}
-          />
+          <Card title="7773240" image={require('../../assets/images/accountCard.jpg')} />
         </View>
 
         <View style={styles.cardButton}>
@@ -62,7 +48,7 @@ export default function HomeScreen() {
             <Icon name="add-circle-outline" size={20} color="#ffffff" />
             <Text style={styles.buttonText}>Add</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.button}>
+          <TouchableOpacity style={styles.button} onPress={handleSendPress}>
             <Icon name="send-outline" size={20} color="#ffffff" />
             <Text style={styles.buttonText}>Send</Text>
           </TouchableOpacity>
@@ -73,15 +59,34 @@ export default function HomeScreen() {
         </View>
       </View>
 
-      <View style={styles.accountHistory}>
-        <Text style={[styles.historyTitle, , { color: isDarkMode ? 'white' : 'black' }]}>History</Text>
-        <FlatList
-          data={paymentHistory}
-          renderItem={renderHistoryItem}
-          keyExtractor={(item) => item.id}
-          style={styles.historyList}
-        />
-      </View>
+      <Modal
+        transparent={true}
+        visible={modalVisible}
+        animationType="slide"
+        onRequestClose={() => setModalVisible(false)}
+      >
+        <View style={styles.modalOverlay}>
+          <View style={styles.modalContainer}>
+            <Text style={styles.modalTitle}>Enter Amount to Send</Text>
+            <TextInput
+              style={styles.modalInput}
+              keyboardType="numeric"
+              placeholder="Amount"
+              value={amount}
+              onChangeText={setAmount}
+            />
+            <View style={styles.modalButtons}>
+              <TouchableOpacity style={styles.modalButton} onPress={handleCancelPress}>
+                <Text style={styles.modalButtonText}>Cancel</Text>
+              </TouchableOpacity>
+
+                            <TouchableOpacity style={styles.modalButton} onPress={handleAddPress}>
+                <Text style={styles.modalButtonText}>Send</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+      </Modal>
     </SafeAreaView>
   );
 }
@@ -89,12 +94,6 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-  },
-  qrButton: {
-    position: 'absolute',
-    top: 10,
-    right: 10,
-    zIndex: 1,
   },
   container: {
     alignItems: 'center',
@@ -118,25 +117,67 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   cardButton: {
-    flexDirection: 'row',
+    flexDirection: 'column',
     justifyContent: 'space-between',
     width: '90%',
-    height: 100,
-    marginBottom: 20
+    marginBottom: 20,
   },
   button: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#1E90FF',
+    padding: 10,
+    borderRadius: 5,
+    marginVertical: 10,
+    height: 100,
+  },
+  buttonText: {
+    color: 'white',
+    marginLeft: 5,
+    fontSize: 16,
+  },
+  modalOverlay: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
+  modalContainer: {
+    width: '80%',
+    backgroundColor: 'white',
+    borderRadius: 10,
+    padding: 20,
+    alignItems: 'center',
+  },
+  modalTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginBottom: 10,
+  },
+  modalInput: {
+    width: '100%',
+    padding: 10,
+    borderWidth: 1,
+    borderColor: '#ddd',
+    borderRadius: 5,
+    marginBottom: 20,
+  },
+  modalButtons: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '100%',
+  },
+  modalButton: {
     flex: 1,
     alignItems: 'center',
     padding: 10,
     marginHorizontal: 5,
     backgroundColor: '#1E90FF',
     borderRadius: 5,
-    flexDirection: 'row',
-    justifyContent: 'center',
   },
-  buttonText: {
+  modalButtonText: {
     color: 'white',
-    marginLeft: 5,
     fontSize: 16,
   },
   accountHistory: {
