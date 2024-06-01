@@ -1,3 +1,4 @@
+import { useColorScheme } from '@/hooks/useColorScheme';
 import React from 'react';
 import { FlatList, ImageBackground, ImageSourcePropType, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -39,8 +40,15 @@ const renderHistoryItem = ({ item }: { item: PaymentHistoryItem }) => (
 );
 
 export default function HomeScreen() {
+  const colorScheme = useColorScheme();
+  const isDarkMode = colorScheme === 'dark';
+
   return (
     <SafeAreaView style={styles.safeArea}>
+      <TouchableOpacity onPress={() => console.log('QR Code button pressed')} style={styles.qrButton}>
+        <Icon name="qr-code-outline" size={30} color="black" />
+      </TouchableOpacity>
+
       <View style={styles.container}>
         <View style={styles.cardContainer}>
           <Card
@@ -66,7 +74,7 @@ export default function HomeScreen() {
       </View>
 
       <View style={styles.accountHistory}>
-        <Text style={styles.historyTitle}>History</Text>
+        <Text style={[styles.historyTitle, , { color: isDarkMode ? 'white' : 'black' }]}>History</Text>
         <FlatList
           data={paymentHistory}
           renderItem={renderHistoryItem}
@@ -81,6 +89,12 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
+  },
+  qrButton: {
+    position: 'absolute',
+    top: 10,
+    right: 10,
+    zIndex: 1,
   },
   container: {
     alignItems: 'center',
