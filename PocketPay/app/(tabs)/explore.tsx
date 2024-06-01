@@ -2,6 +2,8 @@ import { useColorScheme } from '@/hooks/useColorScheme';
 import React from 'react';
 import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
+
+
 export default function ProfileScreen() {
   const colorScheme = useColorScheme();
   const isDarkMode = colorScheme === 'dark';

@@ -52,10 +52,6 @@ export default function HomeScreen() {
             <Icon name="send-outline" size={20} color="#ffffff" />
             <Text style={styles.buttonText}>Send</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.button}>
-            <Icon name="wallet-outline" size={20} color="#ffffff" />
-            <Text style={styles.buttonText}>Withdraw</Text>
-          </TouchableOpacity>
         </View>
       </View>
 
@@ -80,7 +76,7 @@ export default function HomeScreen() {
                 <Text style={styles.modalButtonText}>Cancel</Text>
               </TouchableOpacity>
 
-                            <TouchableOpacity style={styles.modalButton} onPress={handleAddPress}>
+             <TouchableOpacity style={styles.modalButton} onPress={handleAddPress}>
                 <Text style={styles.modalButtonText}>Send</Text>
               </TouchableOpacity>
             </View>
