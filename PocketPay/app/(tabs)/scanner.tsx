@@ -12,7 +12,7 @@ const initialPaymentHistory: PaymentHistoryItem[] = [
 ];
 
 
-export default function App() {
+export default function ScannerScreen() {
     const [facing, setFacing] = useState<CameraType>('back');
     const [permission, requestPermission] = useCameraPermissions();
     const [modalVisible, setModalVisible] = useState(false);

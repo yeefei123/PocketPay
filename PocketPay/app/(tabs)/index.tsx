@@ -1,4 +1,5 @@
 import { useColorScheme } from '@/hooks/useColorScheme';
+import { NavigationProp, ParamListBase } from '@react-navigation/native';
 import React, { useState } from 'react';
 import { ImageBackground, ImageSourcePropType, Modal, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -17,7 +18,7 @@ const Card = ({ title, image }: CardProps) => {
   );
 };
 
-export default function HomeScreen() {
+export default function HomeScreen({ navigation }: { navigation: NavigationProp<ParamListBase> }) {
   const colorScheme = useColorScheme();
   const isDarkMode = colorScheme === 'dark';
   const [modalVisible, setModalVisible] = useState(false);
@@ -44,7 +45,7 @@ export default function HomeScreen() {
         </View>
 
         <View style={styles.cardButton}>
-          <TouchableOpacity style={styles.button}>
+          <TouchableOpacity style={styles.button} onPress={() => { navigation.navigate('(tabs)/add') }}>
             <Icon name="add-circle-outline" size={20} color="#ffffff" />
             <Text style={styles.buttonText}>Add</Text>
           </TouchableOpacity>
