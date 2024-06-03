@@ -16,6 +16,11 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import { HistoryRef, PaymentHistoryItem } from '../history/history';
 
+interface BankInfoProps {
+    balance: number;
+    updateBalance: (newBalance: number) => void; // Function to update the balance
+}
+
 const data = [
     { label: "CIMB Bank", value: "1" },
     { label: "RHB Bank", value: "2" },
@@ -33,7 +38,7 @@ const initialPaymentHistory: PaymentHistoryItem[] = [
     { id: '4', description: 'Dining Out', amount: '-RM75.00', date: '2024-05-14' },
 ];
 
-export default function BankInfo() {
+export default function BankInfo({ balance, updateBalance }: BankInfoProps) {
     const [bankValue, setBankValue] = useState('');
     const [isFocus, setIsFocus] = useState(false);
     const [accountNumber, setAccountNumber] = useState("");
@@ -75,8 +80,12 @@ export default function BankInfo() {
                 };
                 historyRef.current.appendToPaymentHistory(newTransaction);
             }
+            console.log('bankInfo',balance);
+            const updatedBalance = parseFloat(amount) + balance;
+            updateBalance(updatedBalance); 
+            console.log('updatedBalance',updatedBalance)
             setModalVisible(false);
-            alert('Transaction successfully.');
+            alert('Transaction successfully. Your current balance is RM' + balance);
         } else {
             // Handle empty amount
         }

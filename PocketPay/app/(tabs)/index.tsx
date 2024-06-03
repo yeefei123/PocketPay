@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { ImageBackground, ImageSourcePropType, Modal, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/Ionicons';
+import BankInfo from './bankInfo';
 
 interface CardProps {
   title: string;
@@ -23,6 +24,7 @@ export default function HomeScreen({ navigation }: { navigation: NavigationProp<
   const isDarkMode = colorScheme === 'dark';
   const [modalVisible, setModalVisible] = useState(false);
   const [amount, setAmount] = useState('');
+  const [balance, setBalance] = useState(0);
 
   const handleSendPress = () => {
     setModalVisible(true);
@@ -37,13 +39,16 @@ export default function HomeScreen({ navigation }: { navigation: NavigationProp<
     setModalVisible(false);
   };
 
+  const handleBalanceUpdate = (newBalance: number) => {
+    setBalance(newBalance);
+  };
+
   return (
     <SafeAreaView style={styles.safeArea}>
       <View style={styles.container}>
         <View style={styles.cardContainer}>
           <Card title="" image={require('../../assets/images/accountCard.png')} />
         </View>
-
         <View style={styles.cardButton}>
           <TouchableOpacity style={styles.button} onPress={() => { navigation.navigate('(tabs)/add') }}>
             <Icon name="add-circle-outline" size={20} color="#ffffff" />
@@ -77,13 +82,15 @@ export default function HomeScreen({ navigation }: { navigation: NavigationProp<
                 <Text style={styles.modalButtonText}>Cancel</Text>
               </TouchableOpacity>
 
-             <TouchableOpacity style={styles.modalButton} onPress={handleAddPress}>
+              <TouchableOpacity style={styles.modalButton} onPress={handleAddPress}>
                 <Text style={styles.modalButtonText}>Send</Text>
               </TouchableOpacity>
             </View>
           </View>
         </View>
       </Modal>
+
+      <BankInfo balance={balance} updateBalance={handleBalanceUpdate} />
     </SafeAreaView>
   );
 }
