@@ -1,12 +1,13 @@
+import { NavigationProp, ParamListBase } from '@react-navigation/native';
 import { SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
-export default function AddFunction() {
+export default function AddFunction({ navigation }: { navigation: NavigationProp<ParamListBase> }) {
     return (
         <SafeAreaView style={styles.safeArea}>
             <View style={styles.container}>
                 <Text style={styles.title}>Please choose a payment method.</Text>
 
-                <TouchableOpacity style={[styles.button, { backgroundColor: '#007BFF' }]}>
+                <TouchableOpacity style={[styles.button, { backgroundColor: '#007BFF' }]} onPress={() => { navigation.navigate('(tabs)/bankInfo') }}>
                     <Text style={styles.buttonText}>Bank</Text>
                 </TouchableOpacity>
 

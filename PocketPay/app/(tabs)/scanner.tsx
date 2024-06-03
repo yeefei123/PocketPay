@@ -1,7 +1,7 @@
 import { CameraType, CameraView, useCameraPermissions } from 'expo-camera';
 import React, { useRef, useState } from 'react';
 import { Button, Modal, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
-import History, { HistoryRef, PaymentHistoryItem, renderHistoryItem } from '../history/history';
+import History, { HistoryRef, PaymentHistoryItem } from '../history/history';
 
 
 const initialPaymentHistory: PaymentHistoryItem[] = [
@@ -34,7 +34,6 @@ export default function ScannerScreen() {
 
     const handleAmountConfirm = () => {
         if (historyRef.current) {
-            console.log(renderHistoryItem)
             const newTransaction: PaymentHistoryItem = {
                 id: (initialPaymentHistory.length + 1).toString(),
                 description: 'New Transaction',
@@ -43,7 +42,6 @@ export default function ScannerScreen() {
             };
             historyRef.current.appendToPaymentHistory(newTransaction);
         }
-        console.log(initialPaymentHistory)
         setAmtModalVisible(false);
         alert('Transfer successfully');
     };

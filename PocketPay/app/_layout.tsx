@@ -6,6 +6,7 @@ import * as SplashScreen from 'expo-splash-screen';
 import React, { useEffect } from 'react';
 import 'react-native-reanimated';
 import AddFunction from './(tabs)/add';
+import BankInfo from './(tabs)/bankInfo';
 import ProfileScreen from './(tabs)/explore';
 import HomeScreen from './(tabs)/index';
 import ScannerScreen from './(tabs)/scanner'; // renamed from App to avoid confusion
@@ -44,8 +45,9 @@ export default function RootLayout() {
 
   return (
       <Stack.Navigator>
-      <Stack.Screen name="(tabs)/explore" component={BottomTabs} options={{ headerShown: true, title: 'PocketPay', headerBackTitle: 'Back', }} />
+        <Stack.Screen name="(tabs)/explore" component={BottomTabs} options={{ headerShown: true, title: 'PocketPay', headerBackTitle: 'Back', }} />
         <Stack.Screen name="(tabs)/add" component={AddFunction} options={{ headerShown: true, title: "Add Money" }} />
+      <Stack.Screen name="(tabs)/bankInfo" component={BankInfo} options={{ headerShown: true, title: "Add Money" }} />
       </Stack.Navigator>
   );
 }
