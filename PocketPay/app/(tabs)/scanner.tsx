@@ -36,7 +36,7 @@ export default function ScannerScreen() {
         if (historyRef.current) {
             const newTransaction: PaymentHistoryItem = {
                 id: (initialPaymentHistory.length + 1).toString(),
-                description: 'New Transaction',
+                description: 'QR Pay',
                 amount: `+RM${amount}`,
                 date: new Date().toISOString().split('T')[0],
             };
@@ -209,3 +209,6 @@ const styles = StyleSheet.create({
         marginBottom: 20,
     },
 });
+
+export { initialPaymentHistory };
+

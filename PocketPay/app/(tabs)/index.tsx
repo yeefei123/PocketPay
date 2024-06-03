@@ -41,7 +41,7 @@ export default function HomeScreen({ navigation }: { navigation: NavigationProp<
     <SafeAreaView style={styles.safeArea}>
       <View style={styles.container}>
         <View style={styles.cardContainer}>
-          <Card title="7773240" image={require('../../assets/images/accountCard.jpg')} />
+          <Card title="" image={require('../../assets/images/accountCard.png')} />
         </View>
 
         <View style={styles.cardButton}>

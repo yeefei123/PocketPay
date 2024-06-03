@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import {
     Keyboard,
     KeyboardAvoidingView,
@@ -14,6 +14,7 @@ import {
 import { Dropdown } from "react-native-element-dropdown";
 import { SafeAreaView } from "react-native-safe-area-context";
 import AntDesign from "react-native-vector-icons/AntDesign";
+import { HistoryRef, PaymentHistoryItem } from '../history/history';
 
 const data = [
     { label: "CIMB Bank", value: "1" },
@@ -25,30 +26,38 @@ const data = [
     { label: "GXBank", value: "7" },
 ];
 
+const initialPaymentHistory: PaymentHistoryItem[] = [
+    { id: '1', description: 'Grocery Shopping', amount: '-RM150.00', date: '2024-05-20' },
+    { id: '2', description: 'Salary', amount: '+RM3000.00', date: '2024-05-18' },
+    { id: '3', description: 'Electricity Bill', amount: '-RM200.00', date: '2024-05-15' },
+    { id: '4', description: 'Dining Out', amount: '-RM75.00', date: '2024-05-14' },
+];
+
 export default function BankInfo() {
-    const [value, setValue] = useState('');
+    const [bankValue, setBankValue] = useState('');
     const [isFocus, setIsFocus] = useState(false);
     const [accountNumber, setAccountNumber] = useState("");
     const [password, setPassword] = useState("");
-    const [isAccountNumberValid, setIsAccountNumberValid] = useState(true);
+    const [isAccountValid, setIsAccountValid] = useState(true);
     const [isPasswordValid, setIsPasswordValid] = useState(true);
     const [isBankValid, setIsBankValid] = useState(true);
     const [modalVisible, setModalVisible] = useState(false);
     const [amount, setAmount] = useState('');
+    const historyRef = useRef<HistoryRef>(null);
 
     const handleAddMoney = () => {
         const validAccountNumber = "QWERTY"; // Example of valid account number
         const validPassword = "1234567"; // Example of valid password
 
-        const isAccountValid = accountNumber === validAccountNumber;
-        const isPwdValid = password === validPassword;
-        const isBankSelected = value !== '';
+        const isAccountNumberValid = accountNumber === validAccountNumber;
+        const isPasswordValid = password === validPassword;
+        const isBankSelected = bankValue !== '';
 
-        setIsAccountNumberValid(isAccountValid);
-        setIsPasswordValid(isPwdValid);
+        setIsAccountValid(isAccountNumberValid);
+        setIsPasswordValid(isPasswordValid);
         setIsBankValid(isBankSelected);
 
-        if (isAccountValid && isPwdValid && isBankSelected) {
+        if (isAccountNumberValid && isPasswordValid && isBankSelected) {
             setModalVisible(true);
         } else {
             console.log("Invalid account number, password, or bank selection.");
@@ -56,8 +65,21 @@ export default function BankInfo() {
     };
 
     const handleAddPress = () => {
-        setModalVisible(false);
-        alert('Transaction successfully.')
+        if (amount !== '') {
+            if (historyRef.current) {
+                const newTransaction: PaymentHistoryItem = {
+                    id: (initialPaymentHistory.length + 1).toString(),
+                    description: 'Add Money',
+                    amount: `+RM${amount}`,
+                    date: new Date().toISOString().split('T')[0],
+                };
+                historyRef.current.appendToPaymentHistory(newTransaction);
+            }
+            setModalVisible(false);
+            alert('Transaction successfully.');
+        } else {
+            // Handle empty amount
+        }
     };
 
     const handleCancelPress = () => {
@@ -94,11 +116,11 @@ export default function BankInfo() {
                             valueField="value"
                             placeholder={!isFocus ? "Select bank" : "..."}
                             searchPlaceholder="Search..."
-                            value={value}
+                            value={bankValue}
                             onFocus={() => setIsFocus(true)}
                             onBlur={() => setIsFocus(false)}
                             onChange={(item) => {
-                                setValue(item.value);
+                                setBankValue(item.value);
                                 setIsFocus(false);
                                 setIsBankValid(true); // Reset bank validation on change
                             }}
@@ -119,13 +141,13 @@ export default function BankInfo() {
                         <TextInput
                             style={[
                                 styles.input,
-                                !isAccountNumberValid && styles.inputError,
+                                !isAccountValid && styles.inputError,
                             ]}
                             placeholder="Enter your account number"
                             value={accountNumber}
                             onChangeText={setAccountNumber}
                         />
-                        {!isAccountNumberValid && (
+                        {!isAccountValid && (
                             <Text style={styles.errorText}>Invalid account number.</Text>
                         )}
 
