@@ -5,6 +5,8 @@ import { ImageBackground, ImageSourcePropType, Modal, StyleSheet, Text, TextInpu
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/Ionicons';
 import BankInfo from './bankInfo';
+import * as Speech from 'expo-speech';
+
 
 interface CardProps {
   title: string;
@@ -27,7 +29,7 @@ export default function HomeScreen({ navigation }: { navigation: NavigationProp<
   const [balance, setBalance] = useState(0);
 
   const handleSendPress = () => {
-    setModalVisible(true);
+    setModalVisible(false);
   };
 
   const handleAddPress = () => {
@@ -50,11 +52,11 @@ export default function HomeScreen({ navigation }: { navigation: NavigationProp<
           <Card title="" image={require('../../assets/images/accountCard.png')} />
         </View>
         <View style={styles.cardButton}>
-          <TouchableOpacity style={styles.button} onPress={() => { navigation.navigate('(tabs)/add') }}>
+          <TouchableOpacity style={styles.button} onLongPress={() =>{Speech.speak('Add')}} onPress={() => { navigation.navigate('(tabs)/add') }} >
             <Icon name="add-circle-outline" size={20} color="#ffffff" />
             <Text style={styles.buttonText}>Add</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.button} onPress={handleSendPress}>
+          <TouchableOpacity style={styles.button} onPress={() => {navigation.navigate('(tabs)/send')}} onLongPress={() =>{Speech.speak('Send')}}>
             <Icon name="send-outline" size={20} color="#ffffff" />
             <Text style={styles.buttonText}>Send</Text>
           </TouchableOpacity>
@@ -78,11 +80,11 @@ export default function HomeScreen({ navigation }: { navigation: NavigationProp<
               onChangeText={setAmount}
             />
             <View style={styles.modalButtons}>
-              <TouchableOpacity style={styles.modalButton} onPress={handleCancelPress}>
+              <TouchableOpacity style={styles.modalButton} onPress={handleCancelPress} onLongPress={() =>{Speech.speak('Cancel')}}>
                 <Text style={styles.modalButtonText}>Cancel</Text>
               </TouchableOpacity>
 
-              <TouchableOpacity style={styles.modalButton} onPress={handleAddPress}>
+              <TouchableOpacity style={styles.modalButton} onPress={handleAddPress} onLongPress={() =>{Speech.speak('Send')}}>
                 <Text style={styles.modalButtonText}>Send</Text>
               </TouchableOpacity>
             </View>
