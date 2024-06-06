@@ -3,6 +3,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React, { useState } from 'react';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import AddFunction from './(tabs)/add';
+import BalanceBlock from './(tabs)/balanceBlock';
 import BankInfo from './(tabs)/bankInfo';
 import ProfileScreen from './(tabs)/explore';
 import HomeScreen from './(tabs)/index';
@@ -25,6 +26,9 @@ export default function RootLayout() {
         <Stack.Screen name="(tabs)/add" component={AddFunction} options={{ headerShown: true, title: "Add Money", headerBackTitle: 'Back', }} />
         <Stack.Screen name="(tabs)/bankInfo" options={{ headerShown: true, title: "Add Money", headerBackTitle: 'Back', }}>
           {(props) => <BankInfo {...props} balance={balance} updateBalance={updateBalance} />}
+        </Stack.Screen>
+        <Stack.Screen name="(tabs)/balanceBlock" options={{ headerShown: true, title: "Add Money", headerBackTitle: 'Back', }}>
+          {(props) => <BalanceBlock {...props} balance={balance} />}
         </Stack.Screen>
       </Stack.Navigator>
     </SafeAreaProvider>

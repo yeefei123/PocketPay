@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { ImageBackground, ImageSourcePropType, Modal, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/Ionicons';
-import BankInfo from './bankInfo';
+import BalanceBlock from './balanceBlock';
 
 interface CardProps {
   title: string;
@@ -49,6 +49,7 @@ export default function HomeScreen({ navigation }: { navigation: NavigationProp<
         <View style={styles.cardContainer}>
           <Card title="" image={require('../../assets/images/accountCard.png')} />
         </View>
+        <BalanceBlock balance={balance} /> 
         <View style={styles.cardButton}>
           <TouchableOpacity style={styles.button} onPress={() => { navigation.navigate('(tabs)/add') }}>
             <Icon name="add-circle-outline" size={20} color="#ffffff" />
@@ -89,8 +90,6 @@ export default function HomeScreen({ navigation }: { navigation: NavigationProp<
           </View>
         </View>
       </Modal>
-
-      <BankInfo balance={balance} updateBalance={handleBalanceUpdate} />
     </SafeAreaView>
   );
 }
