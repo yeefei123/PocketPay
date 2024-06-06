@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import AddFunction from './(tabs)/add';
 import ContactList from './(tabs)/send';
+import BalanceBlock from './(tabs)/balanceBlock';
 import BankInfo from './(tabs)/bankInfo';
 import ProfileScreen from './(tabs)/explore';
 import HomeScreen from './(tabs)/index';

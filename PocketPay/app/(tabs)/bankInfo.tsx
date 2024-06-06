@@ -85,7 +85,7 @@ export default function BankInfo({ balance, updateBalance }: BankInfoProps) {
             updateBalance(updatedBalance); 
             console.log('updatedBalance',updatedBalance)
             setModalVisible(false);
-            alert('Transaction successfully. Your current balance is RM' + balance);
+            alert('Transaction successfully. Your current balance is RM' + updatedBalance);
         } else {
             // Handle empty amount
         }
