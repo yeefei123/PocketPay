@@ -1,8 +1,8 @@
 // ContactList.tsx
-import React, { useEffect, useState } from 'react';
-import { View, Text, FlatList, TouchableOpacity, StyleSheet, Alert } from 'react-native';
-import Contacts, { Contact } from 'react-native-contacts';
 import { NavigationProp, ParamListBase } from '@react-navigation/native';
+import React, { useEffect, useState } from 'react';
+import { Alert, FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Contact } from 'react-native-contacts';
 
 import { StackNavigationProp } from '@react-navigation/stack';
 
@@ -62,7 +62,7 @@ const contactList: Contact[] = [
         note:''
       },
       {
-        recordID: '6b2237ee0df85980',
+        recordID: '6b2237ee0df85981',
         backTitle: '',
         company: '',
         emailAddresses: [{
@@ -162,7 +162,7 @@ const  ContactList : React.FC<Props> = ({ navigation }: { navigation: Navigation
             keyExtractor={item => item.recordID}
             renderItem={renderContact}
         />
-        <TouchableOpacity style={[styles.button, { backgroundColor: '#007BFF' }]} onPress={() => { navigation.navigate('(tabs)/sendMoney', {contactName : chosenContactName}) }}>
+        <TouchableOpacity style={[styles.button, { backgroundColor: '#007BFF' }]} onPress={() => { navigation.navigate('(tabs)/sendMoney') }}>
                     <Text style={styles.buttonText}>Send</Text>
         </TouchableOpacity>
 

@@ -1,3 +1,4 @@
+import { NavigationProp, ParamListBase } from '@react-navigation/native';
 import React, { useRef, useState } from "react";
 import {
     Keyboard,
@@ -13,20 +14,6 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { HistoryRef, PaymentHistoryItem } from '../history/history';
-import { RouteProp } from '@react-navigation/native';
-
-type RootStackParamList = {
-  ContactList: undefined;
-  ContactDetails: { contactName: string };
-};
-
-type ContactDetailsScreenRouteProp = RouteProp<RootStackParamList, 'ContactDetails'>;
-
-interface Props  {
-  route: ContactDetailsScreenRouteProp;
-  balance: number;
-  updateBalance: (newBalance: number) => void;
-};
 
 const initialPaymentHistory: PaymentHistoryItem[] = [
     { id: '1', description: 'Grocery Shopping', amount: '-RM150.00', date: '2024-05-20' },
@@ -35,8 +22,8 @@ const initialPaymentHistory: PaymentHistoryItem[] = [
     { id: '4', description: 'Dining Out', amount: '-RM75.00', date: '2024-05-14' },
 ];
 
-const SendMoney : React.FC<Props> = ({ route, balance, updateBalance }) => {
-    const { contactName } = route.params as { contactName: string };
+const SendMoney = ({ navigation }: { navigation: NavigationProp<ParamListBase> }) => {
+    const contactName  = 'Carl';
     const [bankValue, setBankValue] = useState('');
     const [isFocus, setIsFocus] = useState(false);
     const [password, setPassword] = useState("");
@@ -48,16 +35,7 @@ const SendMoney : React.FC<Props> = ({ route, balance, updateBalance }) => {
 
     const handleSendMoney = () => {
         const parsedValue = parseFloat(amount);
-
-        if (isNaN(parsedValue) || parsedValue <= 0 ) {
-            console.log("Invalid amount.");
-        } 
-        else if ((balance - parsedValue) < 0){
-            console.log("Not enough balance.");
-        }
-        else {
-            setModalVisible(true);
-        }
+        setModalVisible(true);
     };
 
     const handleSendPress = () => {
@@ -74,12 +52,9 @@ const SendMoney : React.FC<Props> = ({ route, balance, updateBalance }) => {
                 };
                 historyRef.current.appendToPaymentHistory(newTransaction);
             }
-            console.log('bankInfo',balance);
-            const updatedBalance = parseFloat(amount) - balance;
-            updateBalance(updatedBalance); 
-            console.log('updatedBalance',updatedBalance)
             setModalVisible(false);
-            alert('Transaction successfully. Your current balance is RM' + balance);
+            alert('Transaction successfully. Your current balance is RM 10');
+            {navigation.navigate('(tabs)/explore')};
         } else {
             console.log("Wrong Password Given")
         }
@@ -136,6 +111,7 @@ const SendMoney : React.FC<Props> = ({ route, balance, updateBalance }) => {
                             <TextInput
                                 style={styles.modalInput}
                                 value={password}
+                                secureTextEntry={true}
                                 onChangeText={setPassword}
                             />
                             <View style={styles.modalButtons}>

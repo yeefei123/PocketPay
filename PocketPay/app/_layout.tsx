@@ -3,13 +3,11 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React, { useState } from 'react';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import AddFunction from './(tabs)/add';
-import ContactList from './(tabs)/send';
-import BalanceBlock from './(tabs)/balanceBlock';
 import BankInfo from './(tabs)/bankInfo';
 import ProfileScreen from './(tabs)/explore';
 import HomeScreen from './(tabs)/index';
 import ScannerScreen from './(tabs)/scanner';
-import Props from './(tabs)/sendMoney'
+import ContactList from './(tabs)/send';
 import SendMoney from './(tabs)/sendMoney';
 
 const Tab = createBottomTabNavigator();
@@ -31,7 +29,7 @@ export default function RootLayout() {
           {(props) => <BankInfo {...props} balance={balance} updateBalance={updateBalance} />}
         </Stack.Screen>
         <Stack.Screen name="(tabs)/send" component={ContactList} options={{ headerShown: true, title: "Send Money", headerBackTitle: 'Back', }} />
-        <Stack.Screen name="(tabs)/sendMoney" component={() => {<SendMoney route={} balance={balance} updateBalance={updateBalance}}} options={{ headerShown: true, title: "Send Money", headerBackTitle: 'Back', }}/>
+        <Stack.Screen name="(tabs)/sendMoney" component={SendMoney} options={{ headerShown: true, title: "Send Money", headerBackTitle: 'Back', }} />
       </Stack.Navigator>
     </SafeAreaProvider>
   );
